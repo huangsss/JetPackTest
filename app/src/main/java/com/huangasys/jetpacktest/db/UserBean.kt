@@ -35,3 +35,20 @@ interface UserDao {
     fun delete(user: UserBean)
 
 }
+
+@Entity(tableName = "tb_status")
+data class Status(
+    @PrimaryKey(autoGenerate = false)
+    val id : Int,
+    @ColumnInfo
+    val logged:Boolean
+)
+
+@Dao
+interface StatusDao{
+    @Query(value = "select logged from tb_status where id=0")
+    fun queryStatus():LiveData<Boolean>
+
+    @Insert
+    fun insertStatus(status:Status)
+}
